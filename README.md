@@ -9,7 +9,7 @@ Make Qt great again!
 This project is still in development. This is only a preview version of ef.qt. **Use it at your own risk.**
 
 ## What?
-ef.qt is a simple mv\* framework which greatly simplifies your Qt application development. With UI and program logic seperated completely, ef.qt gives you whole control of your app while still remains full flexibility.
+ef.qt is a simple mv\* framework which greatly simplifies your Qt application development. With UI and program logic separated completely, ef.qt gives you whole control of your app while still remains full flexibility.
 
 ## Why do I need it?
 Free you from the not very easy-to-use Qt Creator or creating tons of widgets and layouts manually, and mixing logic with UI heavily and has no chance to modify UI without touching the logic. With only the needed information exposed to your logic layer, you don't need to have UI and logic pasta together any more.

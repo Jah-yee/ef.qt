@@ -5,14 +5,14 @@ const walk = require('walk')
 const fs = require('fs-extra')
 const {generate, getClassNameWithNameSpace, loadExtraTypeDef, writeOutput} = require('./generator.js')
 
-const getSeperatedOutputFilePathWithRightExtension = (filePath, extensionName) => {
+const getSeparatedOutputFilePathWithRightExtension = (filePath, extensionName) => {
 	const fileNameSegments = filePath.split('.')
 	fileNameSegments.pop()
 	fileNameSegments.push(extensionName)
 	return fileNameSegments.join('.')
 }
 
-const fileWalker = ({dir, outPath, seperate, ignores, extensionName}, {verbose, dryrun, watch}, cb) => {
+const fileWalker = ({dir, outPath, separate, ignores, extensionName}, {verbose, dryrun, watch}, cb) => {
 	const dest = path.resolve(outPath)
 
 	if (verbose || dryrun) console.log('[V] Output full path:', outPath)
@@ -59,7 +59,7 @@ const fileWalker = ({dir, outPath, seperate, ignores, extensionName}, {verbose, 
 		return cb(null, {$results, dest, currentVersion})
 	}
 
-	if (seperate) walker.on('end', () => {
+	if (separate) walker.on('end', () => {
 		let doneCount = 0
 
 		const checkEnd = (e) => {
@@ -84,25 +84,25 @@ const fileWalker = ({dir, outPath, seperate, ignores, extensionName}, {verbose, 
 		}
 
 		for (let [filePath, file] of files) {
-			const outFilePath = getSeperatedOutputFilePathWithRightExtension(filePath, extensionName)
+			const outFilePath = getSeparatedOutputFilePathWithRightExtension(filePath, extensionName)
 			generate({files: new Map([[filePath, file]]), dest: path.join(dest, outFilePath)}, {verbose, dryrun}, writeAndCheckEnd)
 		}
 	})
 	else walker.on('end', () => generate({files, dest}, {verbose, dryrun, watch}, writeResults))
 }
 
-const scanEntry = ({dir = '.', outPath = 'ef.hpp', seperate = false, ignores = [], extensionName = 'hpp', extraTypeDef = '.eftypedef'}, {verbose, dryrun, watch}, cb) => {
-	if (seperate && outPath === 'ef.hpp') outPath = '.efgenerated/ef'
-	if (seperate) ignores.push(outPath)
+const scanEntry = ({dir = '.', outPath = 'ef.hpp', separate = false, ignores = [], extensionName = 'hpp', extraTypeDef = '.eftypedef'}, {verbose, dryrun, watch}, cb) => {
+	if (separate && outPath === 'ef.hpp') outPath = '.efgenerated/ef'
+	if (separate) ignores.push(outPath)
 	if (verbose || dryrun) {
 		console.log('[V] Scan dir:', dir)
 		console.log('[V] Output path:', outPath)
-		console.log('[V] Seperate headers:', seperate)
+		console.log('[V] Separate headers:', separate)
 		console.log('[V] Ignored folder(s):', ignores)
 		console.log('[V] Extra param type def:', extraTypeDef)
 	}
 
-	const walkFiles = () => fileWalker({dir, outPath, seperate, ignores, extensionName}, {verbose, dryrun, watch}, cb)
+	const walkFiles = () => fileWalker({dir, outPath, separate, ignores, extensionName}, {verbose, dryrun, watch}, cb)
 
 	if (extraTypeDef) return loadExtraTypeDef({extraTypeDef}, {verbose, dryrun}, walkFiles)
 	else return walkFiles()
@@ -142,4 +142,6 @@ const compileSingleFile = ({input, output, base, extraTypeDef}, {verbose, dryrun
 	else return compileFile()
 }
 
-module.exports = {scanEntry, compileSingleFile, getSeperatedOutputFilePathWithRightExtension}
+module.exports = {scanEntry, compileSingleFile, getSeparatedOutputFilePathWithRightExtension,
+	// Deprecated alias kept so external requires of the old misspelled name keep working.
+	getSeperatedOutputFilePathWithRightExtension: getSeparatedOutputFilePathWithRightExtension}

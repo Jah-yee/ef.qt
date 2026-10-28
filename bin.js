@@ -12,7 +12,7 @@ yargs
 .command('init [dest]', 'create a new ef.qt project', (yargs) => {
 	yargs
 	.positional('dest', {
-		describe: 'destinaion directory to put template in',
+		describe: 'destination directory to put template in',
 		default: '.',
 		type: 'string'
 	})
@@ -40,9 +40,9 @@ yargs
 		type: 'string'
 	})
 	.option('s', {
-		alias: 'seperate',
+		alias: ['separate', 'seperate'],
 		demandOption: false,
-		describe: 'seperate the generated header into headers for each template',
+		describe: 'separate the generated header into headers for each template',
 		type: 'bool'
 	})
 	.option('e', {
@@ -70,7 +70,7 @@ yargs
 	scanEntry({
 		dir: argv.dir,
 		outPath: argv.output,
-		seperate: argv.seperate,
+		separate: argv.separate,
 		extensionName: argv.extension,
 		ignores: argv.ignore,
 		extraTypeDef: argv.typedef
@@ -136,9 +136,9 @@ yargs
 		type: 'string'
 	})
 	.option('s', {
-		alias: 'seperate',
+		alias: ['separate', 'seperate'],
 		demandOption: false,
-		describe: 'seperate the generated header into headers for each template',
+		describe: 'separate the generated header into headers for each template',
 		type: 'bool'
 	})
 	.option('e', {
@@ -167,7 +167,7 @@ yargs
 		dir: argv.dir,
 		debounce: argv.debounce,
 		outPath: argv.output,
-		seperate: argv.seperate,
+		separate: argv.separate,
 		extensionName: argv.extension,
 		ignores: argv.ignore,
 		extraTypeDef: argv.extra
