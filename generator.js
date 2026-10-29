@@ -286,7 +286,7 @@ const generate$childInitialization = ({strs, type, widgetClass, previousLayer, p
 		case 'Layout':
 			if (previousWidgetType === 'QGridLayout') {
 				const [,, index, width] = previousLayerType
-				if (!width && !extraProps.position) throw new SyntaxError('QGridLayout must have `width\' attribure ro children of QGridLayout must have `position\' attribute.')
+				if (!width && !extraProps.position) throw new SyntaxError('QGridLayout must have `width\' attribute or children of QGridLayout must have `position\' attribute.')
 				previousLayerType[2] += 1
 
 				if (extraProps.position) params = `${innerName}, ${extraProps.position}`
